@@ -20,3 +20,12 @@
   Cela donne un total de `20.22ms` par frame, donc 49.46 frames par seconde, et un débit de `49.46/s * 125*8b ~= 50kbps`.
   
   Pour le deuxième cas, seul l'envoi de la trame change : il passe à `1500*8b / 50Mbps = 240µs`, et le total devient `20.44ms` par frame, donc 48.92 frames par seconde, à peine différent, mais un débit beaucoup plus important de `48.92/s * 1500*8b ~= 600kpbs`. On remarque qu'augmenter la taille de la trame permet d'augmenter nettement le débit (et si on va plus loin, cela permet de s'approcher du débit pur).
+
+4. Pour être raisonnablement sûr que le paquet ou l'acknowledgement a été perdu, il faut estimer le temps d'aller-retour du paquet (RTT, Round Trip Time), puis y ajouter un marge d'erreur, qui dépendra en partie de la fiabilité du réseau sur lequel le paquet transite. Il existe de nombreux algorithmes pour y arriver.
+
+6. Calculons d'abord le temps total pour l'envoi et le feedback d'une trame. Ce calcul a déjà été fait plusieurs fois aux questions 2 et 3, nous irons donc plus vite. Il y a au total :
+  - `D + 2*c` bytes transmis à `B` bits par seconde, ce qui prend `8*(D + 2*c) / B` secondes;
+  - deux délais de `s` secondes, donc `2*s` secondes.
+  Cela donne un total de `(D + 2*c)/B + 2*s` secondes pour une trame. Chaque trame comprenant `D` bits utiles, cela nous donne un débit utile de `8*D / [8*(D+2*c)/B + 2*s]` (en bits par seconde).
+  
+  Remarquons que cette expression s'approche de `B` quand `D` augmente. On voit donc à nouveau qu'il est bon d'avoir de longues trames *s'il n'y a pas d'erreur de transmission*. En pratique, il faudra se limiter pour éviter de devoir envoyer une trame de nombreuses fois avant de la recevoir correctement.
