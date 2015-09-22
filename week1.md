@@ -46,11 +46,7 @@
 
 1. Tout d'abord, décrivons comment marche (de manière simplifiée) l'algorithme de calcul de la checksum. Soit une suite de bytes (un message) dont l'on souhaite calculer la checksum. On découpe cette suite en groupes de 16 bits, et on additionne ensemble ces groupes sur 32 bits, de manière à obtenir une somme. Ensuite, on « replie » cette somme sur 16 bits, en découpant les 32 bits en deux groupes de 16 bits et en additionnant ceux-ci.
 
-  Par exemple, ci-dessous nous avons 6 bytes qui se décomposent en trois groupes de 16 bits, dont la valeur décimale est renseignée :
-  
-  ```|--5893--|---2----|-60000--|```
-  
-  La somme obtenue sur 32 bits en additionnant les trois groupes est `65895`, ce qui donne `00000000 00000001 00000001 01100111` en binaire. On la replie ensuite sur 16 bits en faisant `00000000 00000001 + 00000001 01100111`, ce qui donne `00000001 01101000` ou `360` en décimal, qui est la checksum que l'on voulait calculer.
+  Par exemple, ci-dessous nous avons 6 bytes qui se décomposent en trois groupes de 16 bits, dont la valeur décimale est renseignée : `|--5893--|---2----|-60000--|`. La somme obtenue sur 32 bits en additionnant les trois groupes est `65895`, ce qui donne `00000000 00000001 00000001 01100111` en binaire. On la replie ensuite sur 16 bits en faisant `00000000 00000001 + 00000001 01100111`, ce qui donne `00000001 01101000` ou `360` en décimal, qui est la checksum que l'on voulait calculer.
   
   Si l'un des bits change, par exemple dans le premier groupe, la valeur du groupe en question changera (par exemple `5893` pourrait devenir `1797` en mettant le 13e bit à 0). En sommant tous les groupes, on obtiendra une somme différente, qui sera repliée en une checksum différente. Le receveur ayant calculée celle-ci, la comparera à celle qui a été communiquée avec le message, et voyant qu'elles sont différentes, signalera que le message reçu est corrompu.
   
