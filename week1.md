@@ -1,5 +1,7 @@
 # Solutions semaine 1
 
+## Open questions
+
 1. L'émetteur commence au temps zéro à transmettre des bits au récepteur. Il y a `8*d` bits. À `b` bits par seconde, cela prendra `8*d / b` secondes. Une fois cela fait, il faut simplement attendre `t` secondes pour que le dernier bit passe à travers le fil, ce qui donne un total de `8*d/b + t`.
 
 2. Notons d'abord que la temps pour parcourir le fil est de `1000km * 5µs/km = 5ms`. On peut ensuite séparer le temps d'échange en cinq parties :
@@ -22,6 +24,8 @@
   Pour le deuxième cas, seul l'envoi de la trame change : il passe à `1500*8b / 50Mbps = 240µs`, et le total devient `20.44ms` par frame, donc 48.92 frames par seconde, à peine différent, mais un débit beaucoup plus important de `48.92/s * 1500*8b ~= 600kpbs`. On remarque qu'augmenter la taille de la trame permet d'augmenter nettement le débit (et si on va plus loin, cela permet de s'approcher du débit pur).
 
 4. Pour être raisonnablement sûr que le paquet ou l'acknowledgement a été perdu, il faut estimer le temps d'aller-retour du paquet (RTT, Round Trip Time), puis y ajouter un marge d'erreur, qui dépendra en partie de la fiabilité du réseau sur lequel le paquet transite. Il existe de nombreux algorithmes pour y arriver.
+  
+5. C'est une mauvaise idée : en effet, comme le CRC ne permet plus de vérifier si le numéro de séquence ou la taille a été corrompu, il est possible que le receveur pense avoir reçu la bonne information alors que ce n'est pas le cas. Par exemple, si la taille a été corrompue, le receveur ne lira pas la trame correctement. Si le numéro de séquence a été corrompu, le receveur sera décalé au niveau des données. Dans les deux cas, il n'aura aucun moyen de le savoir, et continuera en pensant donc avoir les données correctes.
 
 6. Calculons d'abord le temps total pour l'envoi et le feedback d'une trame. Ce calcul a déjà été fait plusieurs fois aux questions 2 et 3, nous irons donc plus vite. Il y a au total :
   - `D + 2*c` bytes transmis à `B` bits par seconde, ce qui prend `8*(D + 2*c) / B` secondes;
@@ -29,3 +33,29 @@
   Cela donne un total de `(D + 2*c)/B + 2*s` secondes pour une trame. Chaque trame comprenant `D` bits utiles, cela nous donne un débit utile de `8*D / [8*(D+2*c)/B + 2*s]` (en bits par seconde).
   
   Remarquons que cette expression s'approche de `B` quand `D` augmente. On voit donc à nouveau qu'il est bon d'avoir de longues trames *s'il n'y a pas d'erreur de transmission*. En pratique, il faudra se limiter pour éviter de devoir envoyer une trame de nombreuses fois avant de la recevoir correctement.
+
+7. À faire (pour qui veut s'amuser à faire des dessins).
+
+8. Voir 7.
+
+
+## Practice
+
+1.
+
+2.
+
+3.
+
+
+## Discussion questions
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
