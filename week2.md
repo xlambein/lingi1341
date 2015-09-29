@@ -2,11 +2,12 @@
 
 ## Open questions
 
-1. Les adresses de maisons sont de types "hiérarchiques". Prenons une adresse comme par exemple "15 Rue des Wallons, Louvain-La-Neuve 1348 Belgique". On voit clairement, par ordre de précision "Belgique > 1348 > Louvain-La-Neuve > Rue des Wallons > n°15". Une telle adresse permet de trouver plus facilement l'endroit exact et permet de localiser une élément parmis un groupe d'éléments (rue, ville, village, pays, ...). 
+### Question 1
+Les adresses de maisons sont de types "hiérarchiques". Prenons une adresse comme par exemple "15 Rue des Wallons, Louvain-La-Neuve 1348 Belgique". On voit clairement, par ordre de précision "Belgique > 1348 > Louvain-La-Neuve > Rue des Wallons > n°15". Une telle adresse permet de trouver plus facilement l'endroit exact et permet de localiser une élément parmis un groupe d'éléments (rue, ville, village, pays, ...). 
 
 Nous utilisons aussi des adresses "plates", comme par exemple: une numéro de compte bancaire IBAN 2165 8454 1234 5123 permet d'indiquer un numéro de compte précis et unique. Ce genre d'adresses est beaucoup plus simple à utiliser mais ne présente aucune informatisation de hiérarchisations. Il est impossible de relier deux numéros de compte en banque en fonction de la ville du propriétaire ou autre. 
 
-2. 
+### Question 2
 ![Schéma du réseau](02_2_02-1.png)
   
   Les *forwarding tables* étant vides, celles-ci sont construites au fur et à mesure de l'échange des paquets. Trois échanges sont effectués ; analysons-les en détail :
@@ -62,4 +63,20 @@ Nous utilisons aussi des adresses "plates", comme par exemple: une numéro de co
     
     Ensuite, R3 regarde sa *forwarding table* et trouve que C est joignable par le Sud-Est. Il envoie donc le paquet à C.
     
-  3. 
+### Question 3
+
+![Image de la question 3](question3.png)
+
+Comme on utilise toujours la méthode de "port-forwarding", on aura un problème de paquet qui tourne indéfiniement dans le réseau.
+
+Par exemple, si C envoie un paquet à B, le paquet fera: 
+- C -> R3
+- R3 -> B 
+- R3 -> R2
+- R3 -> R1
+- R1 -> A
+- R1 -> R3
+- et ainsi de suite
+
+Une solution à ce problème serait l'utilisation de routage de vecteurs de distances(distance vector routing) ou de routage par état de lien (link state routing). 
+
