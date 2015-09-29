@@ -2,9 +2,12 @@
 
 ## Open questions
 
-1. À faire.
+1. Les adresses de maisons sont de types "hiérarchiques". Prenons une adresse comme par exemple "15 Rue des Wallons, Louvain-La-Neuve 1348 Belgique". On voit clairement, par ordre de précision "Belgique > 1348 > Louvain-La-Neuve > Rue des Wallons > n°15". Une telle adresse permet de trouver plus facilement l'endroit exact et permet de localiser une élément parmis un groupe d'éléments (rue, ville, village, pays, ...). 
 
-2. ![Schéma du réseau](02_2_02-1.png)
+Nous utilisons aussi des adresses "plates", comme par exemple: une numéro de compte bancaire IBAN 2165 8454 1234 5123 permet d'indiquer un numéro de compte précis et unique. Ce genre d'adresses est beaucoup plus simple à utiliser mais ne présente aucune informatisation de hiérarchisations. Il est impossible de relier deux numéros de compte en banque en fonction de la ville du propriétaire ou autre. 
+
+2. 
+![Schéma du réseau](02_2_02-1.png)
   
   Les *forwarding tables* étant vides, celles-ci sont construites au fur et à mesure de l'échange des paquets. Trois échanges sont effectués ; analysons-les en détail :
   
@@ -13,7 +16,7 @@
     C commence par envoyer à R3 au Nord-Ouest. R3 n'a jamais reçu de paquet de C. Il ajoute donc une entrée à sa *forwarding table* indiquant que C peut être contacté par le Sud-Est :
     
     | R3 | Dest. | Port. |
-    ----------------------
+    |----|-------|-------|
     |    | C     | SE    |
     
     R3 ne sachant pas comment joindre B, il *broadcast* dans chacun de ses ports, au Nord-Est et à l'Est.
@@ -21,13 +24,13 @@
     Considérons en premier lieu le Nord-Est. R3 envoie à R2 par le Nord-Est. R2 n'a jamais reçu de paquet en provenance de C. Il ajoute donc une entrée à sa *forwarding table* indiquant que C peut être contacté par le Sud-Ouest :
     
     | R2 | Dest. | Port. |
-    ----------------------
+    |----|-------|-------|
     |    | C     | SW    |
     
     R2 ne sachant pas comment joindre B, il *broadcast* dans chacun de ses ports, ici uniquement à l'Ouest. R2 envoie donc à R1 par l'Ouest. R1 n'a jamais reçu de paquet en provenance de C. Il ajoute donc une entrée à sa *forwarding table* indiquant que C peut être contacté par l'Est :
     
     | R1 | Dest. | Port. |
-    ----------------------
+    |----|-------|-------|
     |    | C     | E     |
     
     R1 ne sachant pas comment joindre B, il *broadcast* dans chacun de ses ports, ici uniquement à l'Ouest. R1 envoie donc à 1 par l'Ouest. A reçoit un message qui ne lui est pas destiné, et s'en débarasse.
@@ -39,21 +42,21 @@
     A commence par envoyer un paquet à R1 à l'Est. R1 reçoit le paquet à destination de C. Au passage, celui-ci découvre qu'il peut contacter A par l'Ouest. Il met donc à jour sa *forwarding table* :
     
     | R1 | Dest. | Port. |
-    ----------------------
+    |----|-------|-------|
     |    | A     | W     |
     |    | C     | E     |
     
     Ensuite, R1 regarde sa *forwarding table* et trouve que C est joignable par l'Est. Il envoie donc le paquet à R2. R2 le reçoit et découvre qu'il peut contacter A par l'Ouest. Il met donc à jour sa *forwarding table* :
     
     | R2 | Dest. | Port. |
-    ----------------------
+    |----|-------|-------|
     |    | A     | W     |
     |    | C     | SW    |
     
     Ensuite, R2 regarde sa *forwarding table* et trouve que C est joignable par le Sud-Ouest. Il envoie donc le paquet à R3. R3 le reçoit et découvre qu'il peut contacter A par le Nord-Est. Il met donc à jour sa *forwarding table* :
     
     | R3 | Dest. | Port. |
-    ----------------------
+    |----|-------|-------|
     |    | A     | NE    |
     |    | C     | SE    |
     
