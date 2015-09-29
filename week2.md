@@ -80,3 +80,18 @@ Par exemple, si C envoie un paquet à B, le paquet fera:
 
 Une solution à ce problème serait l'utilisation de routage de vecteurs de distances(distance vector routing) ou de routage par état de lien (link state routing). 
 
+### Question 4
+
+Comme l'algorithme de routage permet de trouver le chemin de poids optimal (le plus petit), et qu'il peut y avoir des chemins de poids négatifs dans le graphe, il est possible que l'algorithme parvienne à trouver un cycle de poids négatifs. Après avoir trouvé ce cycle, l'algorithme chercherait à l'emprunter à l'infini, c'est à dire de boucler indéfiniment dans ce cycle afin de minimiser le chemin totale d'une manière tout-à-fait absurde.
+
+### Question 5
+![Schéma de la question5](imgs/question5.png)
+
+LA - NY: Houston-Atlanta-Washingtown
+LA - Washingtown: Houston-Atlanta
+
+Pour éviter que l'itinéraire LA-NY passe par Houston et Atlanta, on peut changer le lien "Washingtown-NY" et lui mettre un poids de 3. Ainsi, le chemin de poids idéal passerait par "Sunnydale-Denver-Kansas City-Indianapolis-Chicago". 
+
+Il est également possible de définir des poids tels que le chemin "Los Angeles-New York" et "New York-Los Angeles" passe par des chemins tout-à-fait différents. Mais pour faire ceci, il faut pouvoir définir des liens qui ne sont pas bidirectionnels et qui présentent un poids différent dans un sens et dans l'autre. 
+
+Peut-on avoir un lien entre "Denver" et "Kansas City" tel qu'aucun autre intinéraire ne fasse transiter de paquets dans ce chemin? Non car il faudrait que ce lien ait un poids inférieur à 4 sinon les paquets entre "Denver" et "Kansas City" transiteraient par un lien indirect via "Sunnydale LosAngeles Houston". Or, si le poids est inférieur à 4, les paquets entre "Seatle" et "Kansas City" transiterons par "Denver".  
