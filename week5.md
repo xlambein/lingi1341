@@ -1,6 +1,6 @@
 # Sharing resources
 
-#### Consider the network below. Compute the max-min fair allocation for the hosts in this network assuming that nodes Sx always send traffic towards node Dx. Furthermore, link R1-R2 has a bandwidth of 10 Mpbs while link R2-R3 has a bandwidth of 20 Mbps.
+#### 10- Consider the network below. Compute the max-min fair allocation for the hosts in this network assuming that nodes Sx always send traffic towards node Dx. Furthermore, link R1-R2 has a bandwidth of 10 Mpbs while link R2-R3 has a bandwidth of 20 Mbps.
 
 Comment procéder? On se rappelle du critère de min-max fair: 
 > Un réseau est dit min-max fair si on ne peut changer l'allocation 
@@ -11,6 +11,10 @@ Pour l'exercice, cela donne
 ![Résolution de l'exercice](https://raw.githubusercontent.com/xlambein/lingi1341/master/S5.png)
 
 (notons que l'algorithme nécessite un peu de feeling pour voir quels liens optimiser)
+
+#### 13- Compute the max-min fair bandwidth allocation in the network below.
+
+![Debut de résolution](https://raw.githubusercontent.com/xlambein/lingi1341/master/question6.2.png)
 
 # The DNS
 #### 1- What are the IP addresses of the resolvers that the dig implementation you are using relies on [1] ?
