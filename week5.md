@@ -30,3 +30,19 @@ Content-Length: 5586                          taille du contenu
 Vary: Accept-Encoding                         encodage des caractères
 Content-Type: text/html                       contenu: page HTML
 ```
+
+# Configuring DNS and HTTP servers
+
+#### We ask you to find the IP address of the following fully qualified domain names (FQDN):
+
+ * pc2.nanoinside.net: 
+  ``` dig pc2.nanoinside.net AAAA ``` renvoie **2001:db8:ba1:b0a::222**
+ * dnsorg.org
+  ``` dig dnsorg.org AAAA ``` renvoie **2001:db8:ba1:b0a::1**
+ * dnsroot
+  ``` dig dnsroot AAAA ``` renvoie que c'est un alias vers ROOT-SERVER, soit **2001:db8:ba1:b0a::5**
+
+#### Find the FQDN domain name of the following IPv6 addresses :
+
+ * 2001:db8:ba1:b0a::22 : ```dig -x 2001:db8:ba1:b0a::22```
+ * 2001:db8:ba1:b0a::2: ```dig -x 2001:db8:ba1:b0a::2```
