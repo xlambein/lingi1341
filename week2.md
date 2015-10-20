@@ -1,102 +1,72 @@
-# Solutions semaine 2
+# Solutions semaine 1
 
 ## Open questions
 
-### Question 1
-Les adresses de maisons sont de types "hiérarchiques". Prenons une adresse comme par exemple "15 Rue des Wallons, Louvain-La-Neuve 1348 Belgique". On voit clairement, par ordre de précision "Belgique > 1348 > Louvain-La-Neuve > Rue des Wallons > n°15". Une telle adresse permet de trouver plus facilement l'endroit exact et permet de localiser une élément parmis un groupe d'éléments (rue, ville, village, pays, ...). 
+1. L'émetteur commence au temps zéro à transmettre des bits au récepteur. Il y a `8*d` bits. À `b` bits par seconde, cela prendra `8*d / b` secondes. Une fois cela fait, il faut simplement attendre `t` secondes pour que le dernier bit passe à travers le fil, ce qui donne un total de `8*d/b + t`.
 
-Nous utilisons aussi des adresses "plates", comme par exemple: une numéro de compte bancaire IBAN 2165 8454 1234 5123 permet d'indiquer un numéro de compte précis et unique. Ce genre d'adresses est beaucoup plus simple à utiliser mais ne présente aucune informatisation de hiérarchisations. Il est impossible de relier deux numéros de compte en banque en fonction de la ville du propriétaire ou autre. 
-
-### Question 2
-![Schéma du réseau](02_2_02-1.png)
+2. Notons d'abord que la temps pour parcourir le fil est de `1000km * 5µs/km = 5ms`. On peut ensuite séparer le temps d'échange en cinq parties :
+  - l'envoi de la trame : `1000b / 1Mbps = 1ms` ;
+  - la latence de l'émetteur au récepteur : `5ms` ;
+  - les calculs du récepteur : `1ms` ;
+  - l'envoi de l'acknowledgement : `40b / 1Mbps = 40µs` ;
+  - la latence du récepteur à l'émetteur : `5ms`.
   
-  Les *forwarding tables* étant vides, celles-ci sont construites au fur et à mesure de l'échange des paquets. Trois échanges sont effectués ; analysons-les en détail :
+  Cela donne un total de `12.04ms`.
+
+3. L'énoncé est peu clair : pour préciser, c'est la deuxième machine (le receveur / client) qui est concernée par les limitations de vitesses. On a donc un débit de `50Mbps` pour l'envoi de la trame et un débit de `1Mbps` pour l'envoi de l'acknowlegment.
   
-  1. **C envoie un paquet à B**
-    
-    C commence par envoyer à R3 au Nord-Ouest. R3 n'a jamais reçu de paquet de C. Il ajoute donc une entrée à sa *forwarding table* indiquant que C peut être contacté par le Sud-Est :
-    
-    | R3 | Dest. | Port. |
-    |----|-------|-------|
-    |    | C     | SE    |
-    
-    R3 ne sachant pas comment joindre B, il *broadcast* dans chacun de ses ports, au Nord-Est et à l'Est.
-    
-    Considérons en premier lieu le Nord-Est. R3 envoie à R2 par le Nord-Est. R2 n'a jamais reçu de paquet en provenance de C. Il ajoute donc une entrée à sa *forwarding table* indiquant que C peut être contacté par le Sud-Ouest :
-    
-    | R2 | Dest. | Port. |
-    |----|-------|-------|
-    |    | C     | SW    |
-    
-    R2 ne sachant pas comment joindre B, il *broadcast* dans chacun de ses ports, ici uniquement à l'Ouest. R2 envoie donc à R1 par l'Ouest. R1 n'a jamais reçu de paquet en provenance de C. Il ajoute donc une entrée à sa *forwarding table* indiquant que C peut être contacté par l'Est :
-    
-    | R1 | Dest. | Port. |
-    |----|-------|-------|
-    |    | C     | E     |
-    
-    R1 ne sachant pas comment joindre B, il *broadcast* dans chacun de ses ports, ici uniquement à l'Ouest. R1 envoie donc à 1 par l'Ouest. A reçoit un message qui ne lui est pas destiné, et s'en débarasse.
-    
-    Retournons à R3. En même temps que R3 avait envoyé au Nord-Est à R2, R3 envoie à B par l'Est. B reçoit donc le paquet qui lui était destiné.
+  On peut de nouveau séparer le temps pris par une trame en quatre parties :
+  - l'envoi de la trame : `125*8b / 50Mbps = 20µs` ;
+  - la latence du serveur au client : `10ms` ;
+  - l'envoi de l'acknowledgement : `25*8b / 1Mbps = 200µs` ;
+  - la latence du client au serveur : `10ms`.
   
-  2. **A envoie un paquet à C**
-    
-    A commence par envoyer un paquet à R1 à l'Est. R1 reçoit le paquet à destination de C. Au passage, celui-ci découvre qu'il peut contacter A par l'Ouest. Il met donc à jour sa *forwarding table* :
-    
-    | R1 | Dest. | Port. |
-    |----|-------|-------|
-    |    | A     | W     |
-    |    | C     | E     |
-    
-    Ensuite, R1 regarde sa *forwarding table* et trouve que C est joignable par l'Est. Il envoie donc le paquet à R2. R2 le reçoit et découvre qu'il peut contacter A par l'Ouest. Il met donc à jour sa *forwarding table* :
-    
-    | R2 | Dest. | Port. |
-    |----|-------|-------|
-    |    | A     | W     |
-    |    | C     | SW    |
-    
-    Ensuite, R2 regarde sa *forwarding table* et trouve que C est joignable par le Sud-Ouest. Il envoie donc le paquet à R3. R3 le reçoit et découvre qu'il peut contacter A par le Nord-Est. Il met donc à jour sa *forwarding table* :
-    
-    | R3 | Dest. | Port. |
-    |----|-------|-------|
-    |    | A     | NE    |
-    |    | C     | SE    |
-    
-    Ensuite, R3 regarde sa *forwarding table* et trouve que C est joignable par le Sud-Est. Il envoie donc le paquet à C.
-    
-### Question 3
+  Cela donne un total de `20.22ms` par frame, donc 49.46 frames par seconde, et un débit de `49.46/s * 125*8b ~= 50kbps`.
+  
+  Pour le deuxième cas, seul l'envoi de la trame change : il passe à `1500*8b / 50Mbps = 240µs`, et le total devient `20.44ms` par frame, donc 48.92 frames par seconde, à peine différent, mais un débit beaucoup plus important de `48.92/s * 1500*8b ~= 600kpbs`. On remarque qu'augmenter la taille de la trame permet d'augmenter nettement le débit (et si on va plus loin, cela permet de s'approcher du débit pur).
 
-![Image de la question 3](https://raw.githubusercontent.com/xlambein/lingi1341/master/question3.png)
+4. Pour être raisonnablement sûr que le paquet ou l'acknowledgement a été perdu, il faut estimer le temps d'aller-retour du paquet (RTT, Round Trip Time), puis y ajouter un marge d'erreur, qui dépendra en partie de la fiabilité du réseau sur lequel le paquet transite. Il existe de nombreux algorithmes pour y arriver.
+  
+5. C'est une mauvaise idée : en effet, comme le CRC ne permet plus de vérifier si le numéro de séquence ou la taille a été corrompu, il est possible que le receveur pense avoir reçu la bonne information alors que ce n'est pas le cas. Par exemple, si la taille a été corrompue, le receveur ne lira pas la trame correctement. Si le numéro de séquence a été corrompu, le receveur sera décalé au niveau des données. Dans les deux cas, il n'aura aucun moyen de le savoir, et continuera en pensant donc avoir les données correctes.
 
-Comme on utilise toujours la méthode de "port-forwarding", on aura un problème de paquet qui tourne indéfiniement dans le réseau.
+6. Calculons d'abord le temps total pour l'envoi et le feedback d'une trame. Ce calcul a déjà été fait plusieurs fois aux questions 2 et 3, nous irons donc plus vite. Il y a au total :
+  - `D + 2*c` bytes transmis à `B` bits par seconde, ce qui prend `8*(D + 2*c) / B` secondes;
+  - deux délais de `s` secondes, donc `2*s` secondes.
+  
+  Cela donne un total de `(D + 2*c)/B + 2*s` secondes pour une trame. Chaque trame comprenant `D` bits utiles, cela nous donne un débit utile de `8*D / [8*(D+2*c)/B + 2*s]` (en bits par seconde).
+  
+  Remarquons que cette expression s'approche de `B` quand `D` augmente. On voit donc à nouveau qu'il est bon d'avoir de longues trames *s'il n'y a pas d'erreur de transmission*. En pratique, il faudra se limiter pour éviter de devoir envoyer une trame de nombreuses fois avant de la recevoir correctement.
 
-Par exemple, si C envoie un paquet à B, le paquet fera: 
-- C -> R3
-- R3 -> B 
-- R3 -> R2
-- R3 -> R1
-- R1 -> A
-- R1 -> R3
-- et ainsi de suite
+7. * À faire.
+   * ![Sous-question 2](TP01_07-2.png)
+   * À faire.
 
-Une solution à ce problème serait l'utilisation de routage de vecteurs de distances(distance vector routing) ou de routage par état de lien (link state routing). 
+8. À faire.
 
-### Question 4
 
-Comme l'algorithme de routage permet de trouver le chemin de poids optimal (le plus petit), et qu'il peut y avoir des chemins de poids négatifs dans le graphe, il est possible que l'algorithme parvienne à trouver un cycle de poids négatifs. Après avoir trouvé ce cycle, l'algorithme chercherait à l'emprunter à l'infini, c'est à dire de boucler indéfiniment dans ce cycle afin de minimiser le chemin totale d'une manière tout-à-fait absurde.
+## Practice
 
-### Question 5
-![Schéma de la question5](https://raw.githubusercontent.com/xlambein/lingi1341/master/question5.png)
+1. Tout d'abord, décrivons comment marche (de manière simplifiée) l'algorithme de calcul de la checksum. Soit une suite de bytes (un message) dont l'on souhaite calculer la checksum. On découpe cette suite en groupes de 16 bits, et on additionne ensemble ces groupes sur 32 bits, de manière à obtenir une somme. Ensuite, on « replie » cette somme sur 16 bits, en découpant les 32 bits en deux groupes de 16 bits et en additionnant ceux-ci.
 
-LA - NY: Houston-Atlanta-Washingtown
-LA - Washingtown: Houston-Atlanta
+  Par exemple, ci-dessous nous avons 6 bytes qui se décomposent en trois groupes de 16 bits, dont la valeur décimale est renseignée : `|--5893--|---2----|-60000--|`. La somme obtenue sur 32 bits en additionnant les trois groupes est `65895`, ce qui donne `00000000 00000001 00000001 01100111` en binaire. On la replie ensuite sur 16 bits en faisant `00000000 00000001 + 00000001 01100111`, ce qui donne `00000001 01101000` ou `360` en décimal, qui est la checksum que l'on voulait calculer.
+  
+  Si l'un des bits change, par exemple dans le premier groupe, la valeur du groupe en question changera (par exemple `5893` pourrait devenir `1797` en mettant le 13e bit à 0). En sommant tous les groupes, on obtiendra une somme différente, qui sera repliée en une checksum différente. Le receveur ayant calculée celle-ci, la comparera à celle qui a été communiquée avec le message, et voyant qu'elles sont différentes, signalera que le message reçu est corrompu.
+  
+  Un problème pourrait arriver s'il advenait que le même bit était inversé sur deux blocs de 16 bits différents. Par exemple, considérons les groupes `|--5893--|` et `|---2----|`. En binaire, on obtient `|00010111 00000101|` et `|00000000 00000010|`. Si le 3e bit en partant de la droite était inversé dans un des deux groupes, on obtiendrait une checksum différente, et l'erreur serait détectée (voir plus haut). Si par contre on inversait le 3e bit dans les deux, c'est-à-dire `|00010111 00000001|` et `|00000000 00000110|`, `5889` et `6` en décimal, la somme calculée aurait la même valeur car `5893 + 2 = 5889 + 6`, et donc la checksum serait la même. Par conséquent, l'erreur ne sera pas détectée. Le receveur considérerait donc le message corrompu comme étant correct.
 
-Pour éviter que l'itinéraire LA-NY passe par Houston et Atlanta, on peut changer le lien "Washingtown-NY" et lui mettre un poids de 3. Ainsi, le chemin de poids idéal passerait par "Sunnydale-Denver-Kansas City-Indianapolis-Chicago". 
+2.
 
-Il est également possible de définir des poids tels que le chemin "Los Angeles-New York" et "New York-Los Angeles" passe par des chemins tout-à-fait différents. Mais pour faire ceci, il faut pouvoir définir des liens qui ne sont pas bidirectionnels et qui présentent un poids différent dans un sens et dans l'autre. 
+3.
 
-Peut-on avoir un lien entre "Denver" et "Kansas City" tel qu'aucun autre intinéraire ne fasse transiter de paquets dans ce chemin? Non car il faudrait que ce lien ait un poids inférieur à 4 sinon les paquets entre "Denver" et "Kansas City" transiteraient par un lien indirect via "Sunnydale LosAngeles Houston". Or, si le poids est inférieur à 4, les paquets entre "Seatle" et "Kansas City" transiterons par "Denver".  
 
-### Question 6
-![Schéma de la question 6](https://raw.githubusercontent.com/xlambein/lingi1341/master/question6.png)
+## Discussion questions
 
-Ceci est **une solution possible qui permet de parfois emprunter le chemin voulu**. Il est cependant impossible de forcer l'utilisation de ce chemin en particulier car si on augmente le lien B-A, le chemin E->A se fera via B et D. 
+1.
+
+2.
+
+3.
+
+4.
+
+5.
