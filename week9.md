@@ -72,3 +72,5 @@ retourne à sa valeur initiale (ici 1000bytes).
 #### 9. A TCP connection has been active for some time and has reached a congestion window of 4000 bytes. Four segments are sent, but the second (shown in red in the figure) is corrupted.
 
 #### 10. Draw the complete time-sequence diagram for the scenario used in question 9.
+
+![Réponse](imgs/W9-Q9.png)
