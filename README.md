@@ -6,3 +6,7 @@ Solution to the lingi1341 exercices
  * Semaine 3: Building a network - [solutions](https://github.com/xlambein/lingi1341/blob/master/week3.md)
  * Semaine 4: Congestion control - [solutions](https://github.com/xlambein/lingi1341/blob/master/week4.md)
  * Semaine 5: Applications and transport - [solutions](https://github.com/xlambein/lingi1341/blob/master/week5.md)
+ * Semaine 6: ???
+ * Semaine 7: pas de TP
+ * Semaine 8: ???
+ * Semaine 9: TCP and congestion control - [solutions](https://github.com/xlambein/lingi1341/blob/master/week9.md)
