@@ -8,13 +8,13 @@ Comment procéder? On se rappelle du critère de min-max fair:
 > le débit d'un autre lien (Sx-Dx) de débit inférieur ou égal
 
 Pour l'exercice, cela donne
-![Résolution de l'exercice](https://raw.githubusercontent.com/xlambein/lingi1341/master/S5.png)
+![Résolution de l'exercice](https://raw.githubusercontent.com/xlambein/lingi1341/master/imgs/S5.png)
 
 (notons que l'algorithme nécessite un peu de feeling pour voir quels liens optimiser)
 
 #### 13- Compute the max-min fair bandwidth allocation in the network below.
 
-![Debut de résolution](https://raw.githubusercontent.com/xlambein/lingi1341/master/question6.2.png)
+![Debut de résolution](https://raw.githubusercontent.com/xlambein/lingi1341/master/imgs/question6.2.png)
 
 # The DNS
 #### 1- What are the IP addresses of the resolvers that the dig implementation you are using relies on [1] ?

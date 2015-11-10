@@ -38,7 +38,7 @@
   Remarquons que cette expression s'approche de `B` quand `D` augmente. On voit donc à nouveau qu'il est bon d'avoir de longues trames *s'il n'y a pas d'erreur de transmission*. En pratique, il faudra se limiter pour éviter de devoir envoyer une trame de nombreuses fois avant de la recevoir correctement.
 
 7. * À faire.
-   * ![Sous-question 2](TP01_07-2.png)
+   * ![Sous-question 2](imgs/TP01_07-2.png)
    * À faire.
 
 8. À faire.

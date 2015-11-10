@@ -8,7 +8,7 @@ Les adresses de maisons sont de types "hiérarchiques". Prenons une adresse comm
 Nous utilisons aussi des adresses "plates", comme par exemple: une numéro de compte bancaire IBAN 2165 8454 1234 5123 permet d'indiquer un numéro de compte précis et unique. Ce genre d'adresses est beaucoup plus simple à utiliser mais ne présente aucune informatisation de hiérarchisations. Il est impossible de relier deux numéros de compte en banque en fonction de la ville du propriétaire ou autre. 
 
 ### Question 2
-![Schéma du réseau](02_2_02-1.png)
+![Schéma du réseau](imgs/02_2_02-1.png)
   
   Les *forwarding tables* étant vides, celles-ci sont construites au fur et à mesure de l'échange des paquets. Trois échanges sont effectués ; analysons-les en détail :
   
@@ -65,7 +65,7 @@ Nous utilisons aussi des adresses "plates", comme par exemple: une numéro de co
     
 ### Question 3
 
-![Image de la question 3](https://raw.githubusercontent.com/xlambein/lingi1341/master/question3.png)
+![Image de la question 3](https://raw.githubusercontent.com/xlambein/lingi1341/master/imgs/question3.png)
 
 Comme on utilise toujours la méthode de "port-forwarding", on aura un problème de paquet qui tourne indéfiniement dans le réseau.
 
@@ -85,7 +85,7 @@ Une solution à ce problème serait l'utilisation de routage de vecteurs de dist
 Comme l'algorithme de routage permet de trouver le chemin de poids optimal (le plus petit), et qu'il peut y avoir des chemins de poids négatifs dans le graphe, il est possible que l'algorithme parvienne à trouver un cycle de poids négatifs. Après avoir trouvé ce cycle, l'algorithme chercherait à l'emprunter à l'infini, c'est à dire de boucler indéfiniment dans ce cycle afin de minimiser le chemin totale d'une manière tout-à-fait absurde.
 
 ### Question 5
-![Schéma de la question5](https://raw.githubusercontent.com/xlambein/lingi1341/master/question5.png)
+![Schéma de la question5](https://raw.githubusercontent.com/xlambein/lingi1341/master/imgs/question5.png)
 
 LA - NY: Houston-Atlanta-Washingtown
 LA - Washingtown: Houston-Atlanta
@@ -97,6 +97,6 @@ Il est également possible de définir des poids tels que le chemin "Los Angeles
 Peut-on avoir un lien entre "Denver" et "Kansas City" tel qu'aucun autre intinéraire ne fasse transiter de paquets dans ce chemin? Non car il faudrait que ce lien ait un poids inférieur à 4 sinon les paquets entre "Denver" et "Kansas City" transiteraient par un lien indirect via "Sunnydale LosAngeles Houston". Or, si le poids est inférieur à 4, les paquets entre "Seatle" et "Kansas City" transiterons par "Denver".  
 
 ### Question 6
-![Schéma de la question 6](https://raw.githubusercontent.com/xlambein/lingi1341/master/question6.png)
+![Schéma de la question 6](https://raw.githubusercontent.com/xlambein/lingi1341/master/imgs/question6.png)
 
 Ceci est **une solution possible qui permet de parfois emprunter le chemin voulu**. Il est cependant impossible de forcer l'utilisation de ce chemin en particulier car si on augmente le lien B-A, le chemin E->A se fera via B et D. 
