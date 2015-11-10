@@ -11,13 +11,33 @@ Pendant tout l'algorithme, on utilise l'algorithme de slow start (cwnd < sshthre
 
 **How long does it take for the sender to deliver 3 KBytes to the receiver ?**
 
-Il a fallu 2fois un RTT + 25msec, soit 225ms. 
+Il a fallu 2fois un RTT + 1msec(temps de sérialisation), soit 201ms. 
 
 #### 2.Same question as above but now with a small variation. Recent TCP implementations use a large initial value for the congestion window. Draw the time-sequence diagram that corresponds to an initial value of 10000 bytes for this congestion window.
 
+![Réponse](imgs/W9-Q2.png)
+
+Il faut exactement 2RTT, soit 200ms pour envoyer toutes les données. On commence par envoyer 2 paquets car la fenêtre de réception. En effet, la 
+fenêtre d'envoi vaut le minimum entre la fenêtre de réception et celle de
+congestion (ici, 2MSS). 
+
+Ensuite, quand on reçoit un ACK, comme on est toujours en slow-start, on 
+augmente la fenêtre de congestion de 1MSS. 
+
 #### 3. Same question as the first one, but consider that the MSS on the sender is set to 500 bytes. How does this modification affect the entire delay ?
 
+La solution de cette question est la suivante (nous avons 
+représenté l'ensemble des ACK comme un seul grand ACK)
+![Réponse](imgs/W9-Q3.png)
+
 #### 4. Assuming that there are no losses and that there is no congestion in the network. If the sender writes x bytes on a newly established TCP connection, derive a formula that computes the minimum time required to deliver all these x bytes to the receiver. For the derivation of this formula, assume that x is a multiple of the maximum segment size and that the receive window and the slow-start threshold are larger than x.
+
+Supposons que x = k.RTT 
+Si rwin >> cwnd: on enverra en [log2(k)*RTT] arrondi au supérieur. 
+Si on tient compte du temps de sérialisation, on doit ajouter 
+(log2(k)-1) * le temps de sérialisation. 
+
+Sii cette hypothèse n'est pas validée, c'est un petit peu plus complexe..
 
 #### 5. In question 1, we assumed that the receiver acknowledged every segment received from the sender. In practice, many deployed TCP implementations use delayed acknowledgements. Assuming a delayed acknowledgement timer of 50 milliseconds, modify the time-sequence diagram below to reflect the impact of these delayed acknowledgement. Does their usage decreases or increased the transmission delay ?
 
