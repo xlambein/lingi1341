@@ -124,3 +124,16 @@ Non, ce n'est pas possible, car lorsque les paquets arrivent en R2, ils ne peuve
 Il n'est pas possible d'imposer ces chemins dans le cas de *distance vectors* ou de *link state packets*, parce-que, à nouveau, R2 n'a qu'une seule entrée pour R4 dans sa table de routage.
 
 En revanche, avec des circuits virtuels, il est possible d'utiliser un certain label pour le premier chemin et un label différent pour le deuxième chemin. Dans le cas, R1 spécifierait le premier label pour rejoindre R4, et R3 le second. Les circuits virtuels permettent ainsi d'avoir deux interfaces différentes dans leur table de routage pour rejoindre la même destination.
+
+### Question 11
+
+En donnant le même poids à chaque lien, les deux chemins les plus courts sont naturellement ceux demandés par l'énoncé.
+
+## Discussions questions
+
+### Question 1
+
+Le lien ne servira à rien, car les tables de forwarding sont déjà fixées : lorsqu'un paquet est reçu par un noeud, il ne sera jamais envoyé sur toutes ses interfaces.
+
+### Question 2
+
