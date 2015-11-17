@@ -1,4 +1,4 @@
-# Solutions semaine 2
+# Solutions semaine 3
 
 ## Open questions
 
@@ -100,3 +100,27 @@ Peut-on avoir un lien entre "Denver" et "Kansas City" tel qu'aucun autre intiné
 ![Schéma de la question 6](https://raw.githubusercontent.com/xlambein/lingi1341/master/imgs/question6.png)
 
 Ceci est **une solution possible qui permet de parfois emprunter le chemin voulu**. Il est cependant impossible de forcer l'utilisation de ce chemin en particulier car si on augmente le lien B-A, le chemin E->A se fera via B et D. 
+
+### Question 7
+
+Il suffit (par exemple) de donner les coûts suivants aux liens :
+- `A-B = 1`
+- `A-D = 3`
+- `B-D = 1`
+- `B-E = 1`
+- `D-F = 1`
+- `E-F = 2`
+
+### Question 8
+
+Étant donné que dans *source routing*, les liens à utiliser sont listés explicitement dans les paquets, n'importe quel chemin peut être employé pour aller de R1 à R4.
+
+### Question 9
+
+Non, ce n'est pas possible, car lorsque les paquets arrivent en R2, ils ne peuvent emprunter qu'un seul chemin pour se rendre en R5 : celui qui est indiqué dans la table de forwarding de R2.
+
+### Question 10
+
+Il n'est pas possible d'imposer ces chemins dans le cas de *distance vectors* ou de *link state packets*, parce-que, à nouveau, R2 n'a qu'une seule entrée pour R4 dans sa table de routage.
+
+En revanche, avec des circuits virtuels, il est possible d'utiliser un certain label pour le premier chemin et un label différent pour le deuxième chemin. Dans le cas, R1 spécifierait le premier label pour rejoindre R4, et R3 le second. Les circuits virtuels permettent ainsi d'avoir deux interfaces différentes dans leur table de routage pour rejoindre la même destination.
